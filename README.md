@@ -1,0 +1,1 @@
+This is my pet bot (not yet) that aims to send me weather updates.
