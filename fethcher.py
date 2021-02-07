@@ -1,6 +1,6 @@
 import os
 import sys
-from signal import signal, SIGQUIT, SIGINT
+from signal import signal, SIGQUIT, SIGINT, SIGTERM
 from time import sleep
 from typing import Any, Optional
 
@@ -61,6 +61,7 @@ if __name__ == '__main__':
 
     signal(SIGINT, quit_handler)
     signal(SIGQUIT, quit_handler)
+    signal(SIGTERM, quit_handler)
 
     print()
     print(f"Connecting to Redis at {redis_host}:{redis_port} (db={redis_db})...")
@@ -77,8 +78,8 @@ if __name__ == '__main__':
         json = resp.json()
         try:
             state: weather.WeatherState = weather.from_api(json)
-            print(weather.as_readable(state))
             redis.hset(name=place_id, mapping=state)
+            print(weather.as_readable(state))
         except Exception as e:
             print(f"Cannot parse following json:\n{json}", file=sys.stderr)
             raise e

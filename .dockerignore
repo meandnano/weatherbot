@@ -1,0 +1,8 @@
+*.pyc
+build/
+.idea/
+*.iml
+README.md
+LICENSE
+
+prod.env

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+
+  fetcher:
+    build:
+      context: .
+      dockerfile: fetcher.Dockerfile
+    environment:
+      - API_KEY
+      - PERIOD_SEC=600 # Fetch weather every 10 minutes
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis

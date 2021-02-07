@@ -2,3 +2,5 @@
 venv/
 *.iml
 *.pyc
+
+prod.env
