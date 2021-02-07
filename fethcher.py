@@ -52,12 +52,20 @@ def quit_handler(signum, frame):
 if __name__ == '__main__':
     apiKey: str = read_arg(1, 'API_KEY')
     period_sec: int = int(read_arg(2, 'PERIOD_SEC', -1))
+    redis_host: str = read_arg(3, 'REDIS_HOST', 'localhost')
+    redis_port: int = int(read_arg(4, 'REDIS_PORT', 6379))
+    redis_db: int = int(read_arg(5, 'REDIS_DB', 0))
 
     place_id = CITY_ID_SOLNA
     url = CITY_CURRENT_WEATHER_URL.format(id=place_id, key=apiKey)
 
     signal(SIGINT, quit_handler)
     signal(SIGQUIT, quit_handler)
+
+    print()
+    print(f"Connecting to Redis at {redis_host}:{redis_port} (db={redis_db})...")
+    redis = Redis(host=redis_host, port=redis_port, db=redis_db)
+    redis.ping()
 
     if period_sec > 0:
         print(f"Fetching weather data every {period_sec} seconds. Use Ctrl+D to quit...\n")
@@ -70,6 +78,7 @@ if __name__ == '__main__':
         try:
             state: weather.WeatherState = weather.from_api(json)
             print(weather.as_readable(state))
+            redis.hset(name=place_id, mapping=state)
         except Exception as e:
             print(f"Cannot parse following json:\n{json}", file=sys.stderr)
             raise e
