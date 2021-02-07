@@ -5,8 +5,9 @@ from time import sleep
 from typing import Any, Optional
 
 import requests
+from redis import Redis
 
-from weather_data import WeatherState
+import weather
 
 CITY_ID_STHLM = 2673722
 CITY_ID_SOLNA = 2675397
@@ -52,17 +53,13 @@ if __name__ == '__main__':
     apiKey: str = read_arg(1, 'API_KEY')
     period_sec: int = int(read_arg(2, 'PERIOD_SEC', -1))
 
-    if not apiKey:
-        print("No api key provided, pass it as the first arg or in API_KEY env var", file=sys.stderr)
-        exit(1)
-
-    url = CITY_CURRENT_WEATHER_URL.format(id=CITY_ID_SOLNA, key=apiKey)
+    place_id = CITY_ID_SOLNA
+    url = CITY_CURRENT_WEATHER_URL.format(id=place_id, key=apiKey)
 
     signal(SIGINT, quit_handler)
     signal(SIGQUIT, quit_handler)
 
     if period_sec > 0:
-        print()
         print(f"Fetching weather data every {period_sec} seconds. Use Ctrl+D to quit...\n")
 
     while True:
@@ -71,7 +68,8 @@ if __name__ == '__main__':
 
         json = resp.json()
         try:
-            print(WeatherState(json))
+            state: weather.WeatherState = weather.from_api(json)
+            print(weather.as_readable(state))
         except Exception as e:
             print(f"Cannot parse following json:\n{json}", file=sys.stderr)
             raise e
