@@ -1,5 +1,6 @@
 certifi==2020.12.5
 chardet==4.0.0
+defaultenv==0.0.14
 idna==2.10
 pytz==2021.1
 redis==3.5.3

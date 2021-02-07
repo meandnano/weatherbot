@@ -3,4 +3,4 @@ venv/
 *.iml
 *.pyc
 
-prod.env
+.env
