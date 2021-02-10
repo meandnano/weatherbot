@@ -1,7 +1,7 @@
 from app.weather import WeatherState, as_readable
 
 
-def test_weather_readable_default_tz():
+def test_as_readable_works_when_default_tz():
     w: WeatherState = {
         'place_name': "New Ark",
         'weather_desc': 'cloudy',
@@ -20,7 +20,7 @@ Clouds are taking 80% of the sky
 Pressure is 108 hPa and humidity is 56%"""
 
 
-def test_weather_readable_specific_tz():
+def test_as_readable_works_when_specific_tz():
     w: WeatherState = {
         'place_name': "New Ark",
         'weather_desc': 'cloudy',
