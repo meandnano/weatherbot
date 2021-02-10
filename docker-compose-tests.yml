@@ -1,0 +1,13 @@
+version: "2"
+services:
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379
+
+  tests:
+    build:
+      context: .
+      dockerfile: docker/fetcher-tests.Dockerfile
+    depends_on:
+      - redis
