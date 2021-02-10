@@ -16,6 +16,6 @@ RUN apk add python3
 WORKDIR /src
 
 COPY --from=build /src/venv/ ./venv/
-COPY fetcher.py weather.py env_support.py ./
+COPY app/src/fetcher.py app/src/weather.py app/src/env_support.py ./
 
 CMD ./venv/bin/python -u fetcher.py
