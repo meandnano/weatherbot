@@ -6,7 +6,7 @@ RUN apk update \
 
 WORKDIR /src
 COPY requirements.txt ./
-RUN virtualenv venv \
+RUN python3 -m venv venv \
     && ./venv/bin/pip3 install -r requirements.txt
 
 FROM alpine:3.13
