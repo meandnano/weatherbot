@@ -1,6 +1,6 @@
 from typing import TypeVar, Optional
 
-VAR = TypeVar('VAR')
+VAR = TypeVar("VAR")
 
 
 class VarNotProvidedException(Exception):

@@ -5,7 +5,7 @@ import pytest
 from app import weather
 
 """Taken from https://openweathermap.org/current"""
-resp_json = '''{
+resp_json = """{
   "coord": {
     "lon": -122.08,
     "lat": 37.39
@@ -48,20 +48,20 @@ resp_json = '''{
   "id": 420006353,
   "name": "Mountain View",
   "cod": 200
-  }'''
+  }"""
 
 
 def test_from_api_succeeds_when_correct_json():
     expected: weather.WeatherState = {
-        'place_name': 'Mountain View',
-        'weather_desc': 'clear sky',
-        'temp': 282.55,
-        'temp_feels_like': 281.86,
-        'pressure': 1023,
-        'humidity': 100,
-        'cloud': 1,
-        'wind_speed': 1.5,
-        'when': 1560350645.0
+        "place_name": "Mountain View",
+        "weather_desc": "clear sky",
+        "temp": 282.55,
+        "temp_feels_like": 281.86,
+        "pressure": 1023,
+        "humidity": 100,
+        "cloud": 1,
+        "wind_speed": 1.5,
+        "when": 1560350645.0,
     }
 
     json_dict: dict = json.loads(resp_json)
